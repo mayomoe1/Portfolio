@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Edgar Mauricio Martin Content Production Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --dark: #07101F;
+    --navy: #0F2040;
+    --accent: #FF5124;
+    --accent2: #0057FF;
+    --light-bg: #F4F6FA;
+    --card-bg: #FFFFFF;
+    --border: #E2E8F0;
+    --text: #111827;
+    --muted: #6B7280;
+    --ai-color: #7C3AED;
+    --ai-light: #EDE9FE;
+  }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--light-bg);
+    color: var(--text);
+    line-height: 1.6;
+  }
+
+  /* NAV */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(7, 16, 31, 0.97);
+    backdrop-filter: blur(10px);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 48px; height: 60px;
+  }
+  .nav-logo { color: #fff; font-weight: 700; font-size: 15px; letter-spacing: -.2px; }
+  .nav-logo span { color: var(--accent); }
+  .nav-links { display: flex; gap: 28px; list-style: none; }
+  .nav-links a { color: rgba(255,255,255,.7); text-decoration: none; font-size: 13px; font-weight: 500; transition: color .15s; }
+  .nav-links a:hover { color: #fff; }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(135deg, var(--dark) 0%, #0D2847 60%, #152E54 100%);
+    color: #fff;
+    padding: 80px 48px 90px;
+    position: relative; overflow: hidden;
+  }
+  .hero::after {
+    content: '';
+    position: absolute; top: -80px; right: -80px;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(255,81,36,.12) 0%, transparent 65%);
+    pointer-events: none;
+  }
+  .hero-inner { max-width: 900px; position: relative; z-index: 1; }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 7px;
+    background: rgba(124,58,237,.2); border: 1px solid rgba(124,58,237,.4);
+    color: #C4B5FD; font-size: 11px; font-weight: 600;
+    padding: 5px 12px; border-radius: 20px; margin-bottom: 24px;
+    text-transform: uppercase; letter-spacing: .06em;
+  }
+  .hero-badge::before { content: '●'; font-size: 8px; color: #7C3AED; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+  .hero h1 { font-size: 48px; font-weight: 800; line-height: 1.1; letter-spacing: -.5px; margin-bottom: 16px; }
+  .hero h1 span { color: var(--accent); }
+  .hero-sub { font-size: 17px; color: rgba(255,255,255,.7); max-width: 580px; line-height: 1.65; margin-bottom: 32px; }
+  .hero-tags { display: flex; gap: 10px; flex-wrap: wrap; }
+  .hero-tag {
+    background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.15);
+    color: rgba(255,255,255,.85); font-size: 12px; font-weight: 500;
+    padding: 6px 14px; border-radius: 20px;
+  }
+  .hero-scroll {
+    position: absolute; bottom: 28px; left: 50%; transform: translateX(-50%);
+    color: rgba(255,255,255,.3); font-size: 11px; letter-spacing: .1em;
+    text-transform: uppercase; display: flex; flex-direction: column; align-items: center; gap: 6px;
+  }
+  .hero-scroll::after { content: '↓'; font-size: 16px; }
+
+  /* AI GATE SECTION */
+  .ai-gate {
+    background: linear-gradient(135deg, #2E1065 0%, #1E1B4B 100%);
+    padding: 56px 48px;
+  }
+  .ai-gate-inner { max-width: 900px; margin: 0 auto; }
+  .ai-gate-label {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(124,58,237,.3); border: 1px solid rgba(167,139,250,.4);
+    color: #C4B5FD; font-size: 10px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: .1em; padding: 4px 12px; border-radius: 4px; margin-bottom: 18px;
+  }
+  .ai-gate h2 { font-size: 26px; font-weight: 700; color: #fff; margin-bottom: 10px; }
+  .ai-gate-sub { color: rgba(255,255,255,.65); font-size: 14px; max-width: 620px; margin-bottom: 32px; line-height: 1.6; }
+  .ai-tools-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; }
+  .ai-tool-card {
+    background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.1);
+    border-radius: 10px; padding: 16px 18px;
+  }
+  .ai-tool-name { color: #A78BFA; font-size: 13px; font-weight: 700; margin-bottom: 5px; }
+  .ai-tool-use { color: rgba(255,255,255,.6); font-size: 12px; line-height: 1.5; }
+  .ai-live-project {
+    margin-top: 28px;
+    background: rgba(255,255,255,.05); border: 1px solid rgba(167,139,250,.25);
+    border-radius: 12px; padding: 20px 24px;
+    display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap;
+  }
+  .ai-live-info { flex: 1; }
+  .ai-live-title { color: #fff; font-size: 16px; font-weight: 600; margin-bottom: 6px; }
+  .ai-live-desc { color: rgba(255,255,255,.6); font-size: 13px; line-height: 1.5; }
+  .btn-live {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--ai-color); color: #fff; text-decoration: none;
+    font-size: 13px; font-weight: 600; padding: 10px 20px; border-radius: 8px;
+    transition: background .15s; white-space: nowrap;
+  }
+  .btn-live:hover { background: #6D28D9; }
+  .btn-live::after { content: '↗'; }
+
+  /* SECTION WRAPPER */
+  .section { padding: 72px 48px; }
+  .section:nth-child(even) { background: #fff; }
+  .section-inner { max-width: 960px; margin: 0 auto; }
+  .section-header { margin-bottom: 36px; }
+  .section-eyebrow {
+    display: inline-block; font-size: 10px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: .1em; color: var(--accent); margin-bottom: 10px;
+  }
+  .section-title { font-size: 28px; font-weight: 700; color: var(--dark); margin-bottom: 8px; }
+  .section-sub { font-size: 14px; color: var(--muted); max-width: 520px; line-height: 1.65; }
+
+  /* WORK CARDS */
+  .work-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(420px, 1fr)); gap: 20px; }
+  .work-card {
+    background: var(--card-bg); border: 1px solid var(--border);
+    border-radius: 14px; overflow: hidden;
+    transition: box-shadow .2s, transform .15s;
+  }
+  .work-card:hover { box-shadow: 0 8px 32px rgba(0,0,0,.1); transform: translateY(-2px); }
+  .work-card-preview {
+    background: var(--dark); height: 200px;
+    display: flex; align-items: center; justify-content: center;
+    position: relative; overflow: hidden;
+  }
+  .work-card-preview video {
+    width: 100%; height: 100%; object-fit: cover;
+  }
+  .work-card-preview iframe {
+    width: 100%; height: 100%; border: none; pointer-events: none;
+    transform: scale(1); transform-origin: top left;
+  }
+  .preview-label {
+    position: absolute; bottom: 10px; left: 10px;
+    background: rgba(0,0,0,.7); color: #fff; font-size: 10px; font-weight: 600;
+    padding: 4px 10px; border-radius: 4px; text-transform: uppercase; letter-spacing: .06em;
+  }
+  .preview-icon {
+    font-size: 40px; opacity: .25;
+  }
+  .preview-overlay-link {
+    position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+    background: rgba(7,16,31,.55);
+    color: #fff; font-size: 13px; font-weight: 600; text-decoration: none;
+    gap: 8px; opacity: 0; transition: opacity .2s;
+  }
+  .work-card:hover .preview-overlay-link { opacity: 1; }
+  .work-card-body { padding: 20px 22px; }
+  .work-card-category {
+    font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em;
+    color: var(--accent); margin-bottom: 8px;
+  }
+  .work-card-title { font-size: 16px; font-weight: 700; margin-bottom: 6px; color: var(--dark); }
+  .work-card-desc { font-size: 13px; color: var(--muted); line-height: 1.6; margin-bottom: 14px; }
+  .ai-note {
+    background: var(--ai-light); border-left: 3px solid var(--ai-color);
+    border-radius: 0 6px 6px 0; padding: 10px 13px;
+    font-size: 12px; color: #4C1D95; line-height: 1.5;
+  }
+  .ai-note strong { font-weight: 600; }
+  .work-card-footer {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 12px 22px; border-top: 1px solid var(--border);
+    background: #FAFBFC;
+  }
+  .tool-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+  .tool-tag {
+    background: #F1F5F9; color: #475569; font-size: 10px; font-weight: 600;
+    padding: 3px 9px; border-radius: 4px;
+  }
+  .btn-view {
+    display: inline-flex; align-items: center; gap: 6px;
+    color: var(--accent2); font-size: 12px; font-weight: 600;
+    text-decoration: none; transition: gap .15s;
+  }
+  .btn-view::after { content: '→'; }
+  .btn-view:hover { gap: 8px; }
+
+  /* VIDEO GRID */
+  .video-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
+  .video-card {
+    background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; overflow: hidden;
+    transition: box-shadow .2s, transform .15s;
+  }
+  .video-card:hover { box-shadow: 0 6px 24px rgba(0,0,0,.1); transform: translateY(-2px); }
+  .video-thumb {
+    background: #111827; aspect-ratio: 16/9; position: relative;
+    display: flex; align-items: center; justify-content: center; overflow: hidden;
+  }
+  .video-thumb video { width: 100%; height: 100%; object-fit: cover; }
+  .video-play-btn {
+    position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+    background: rgba(0,0,0,.3);
+  }
+  .video-play-btn::before {
+    content: '';
+    width: 48px; height: 48px; background: rgba(255,255,255,.9); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .video-play-icon {
+    position: absolute; width: 0; height: 0;
+    border-top: 10px solid transparent; border-bottom: 10px solid transparent;
+    border-left: 18px solid var(--dark); margin-left: 4px;
+  }
+  .video-info { padding: 14px 16px; }
+  .video-cat { font-size: 10px; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: .08em; margin-bottom: 5px; }
+  .video-title { font-size: 14px; font-weight: 600; color: var(--dark); margin-bottom: 6px; }
+  .video-ai { background: var(--ai-light); border-radius: 6px; padding: 8px 11px; font-size: 11px; color: #5B21B6; line-height: 1.5; margin-top: 8px; }
+
+  /* COLLATERAL GRID */
+  .collateral-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+  .collateral-card {
+    background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px;
+    padding: 22px; display: flex; flex-direction: column; gap: 12px;
+    transition: box-shadow .15s;
+  }
+  .collateral-card:hover { box-shadow: 0 4px 18px rgba(0,0,0,.09); }
+  .collateral-icon {
+    width: 44px; height: 44px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px;
+  }
+  .collateral-cat { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); }
+  .collateral-title { font-size: 15px; font-weight: 700; color: var(--dark); }
+  .collateral-desc { font-size: 12px; color: var(--muted); line-height: 1.55; flex: 1; }
+  .collateral-ai { background: var(--ai-light); border-radius: 6px; padding: 8px 11px; font-size: 11px; color: #5B21B6; line-height: 1.5; }
+  .collateral-link {
+    display: inline-flex; align-items: center; gap: 6px;
+    color: var(--accent2); font-size: 12px; font-weight: 600; text-decoration: none;
+    margin-top: 4px;
+  }
+  .collateral-link::after { content: '→'; }
+
+  /* CONTACT / FOOTER */
+  .footer {
+    background: var(--dark); color: #fff;
+    padding: 56px 48px; text-align: center;
+  }
+  .footer h2 { font-size: 26px; font-weight: 700; margin-bottom: 10px; }
+  .footer p { color: rgba(255,255,255,.6); font-size: 14px; margin-bottom: 28px; }
+  .footer-links { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; }
+  .footer-btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 13px; font-weight: 600; text-decoration: none;
+    padding: 10px 22px; border-radius: 8px;
+  }
+  .footer-btn-primary { background: var(--accent); color: #fff; }
+  .footer-btn-secondary { background: rgba(255,255,255,.1); color: #fff; border: 1px solid rgba(255,255,255,.2); }
+  .footer-bottom { margin-top: 48px; padding-top: 24px; border-top: 1px solid rgba(255,255,255,.1); color: rgba(255,255,255,.3); font-size: 12px; }
+
+  /* Hide Replit badge */
+  [data-replit-badge], .replit-badge, #replit-badge,
+  iframe[src*="replit.com/badge"], div[style*="replit"] > iframe { display: none !important; }
+
+  @media (max-width: 768px) {
+    nav { padding: 0 20px; }
+    .nav-links { display: none; }
+    .hero, .ai-gate, .section, .footer { padding-left: 20px; padding-right: 20px; }
+    .hero h1 { font-size: 32px; }
+    .work-grid, .video-grid, .collateral-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Edgar M. Martin<span>.</span></div>
+  <ul class="nav-links">
+    <li><a href="#ai">AI Fluency</a></li>
+    <li><a href="#gtm">GTM & Sales</a></li>
+    <li><a href="#video">Video</a></li>
+    <li><a href="#collateral">Collateral</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-badge">Content Production Portfolio · 2026</div>
+    <h1>Edgar Mauricio<br>Martin Peña<span>.</span></h1>
+    <p class="hero-sub">
+      AI-native content producer specializing in GTM decks, visual assets, video production,
+      and sales intelligence.
+    </p>
+    <div class="hero-tags">
+      <span class="hero-tag">AI-Augmented Workflow</span>
+      <span class="hero-tag">GTM Presentations</span>
+      <span class="hero-tag">Video Post-Production</span>
+      <span class="hero-tag">Sales Intelligence</span>
+      <span class="hero-tag">Infographics & Diagrams</span>
+      <span class="hero-tag">Bilingual EN · ES</span>
+    </div>
+  </div>
+  <div class="hero-scroll">scroll</div>
+</section>
+
+<!-- AI GATE -->
+<section class="ai-gate" id="ai">
+  <div class="ai-gate-inner">
+    <div class="ai-gate-label">Hard Gate · AI Fluency</div>
+    <h2>AI is not a bonus it's my production stack.</h2>
+    <p class="ai-gate-sub">
+      Every deliverable in this portfolio was built with AI in the workflow for research, structure, copy, visuals, and code.
+      Below is the toolkit. The live project at the bottom is proof.
+    </p>
+    <div class="ai-tools-grid">
+      <div class="ai-tool-card">
+        <div class="ai-tool-name">Claude (Anthropic)</div>
+        <div class="ai-tool-use">Research synthesis, slide structure, copy drafting, HTML/code generation, ICP analysis</div>
+      </div>
+      <div class="ai-tool-card">
+        <div class="ai-tool-name">ChatGPT (OpenAI)</div>
+        <div class="ai-tool-use">Ideation, persona development, copywriting iterations, content strategy briefs</div>
+      </div>
+      <div class="ai-tool-card">
+        <div class="ai-tool-name">Replit AI</div>
+        <div class="ai-tool-use">Building and deploying full-stack web tools live asset manager built and hosted in Replit</div>
+      </div>
+
+      <div class="ai-tool-card">
+        <div class="ai-tool-name">Gemini, NotebookLM & Nano Banana</div>
+        <div class="ai-tool-use">Gemini for research and content generation, NotebookLM for source synthesis and briefing, Nano Banana for image and visual asset creation</div>
+      </div>
+      <div class="ai-tool-card">
+        <div class="ai-tool-name">Canva AI + Figma</div>
+        <div class="ai-tool-use">Infographic production, brand-compliant slide templates, marketecture diagrams</div>
+      </div>
+    </div>
+
+    <div class="ai-live-project">
+      <div class="ai-live-info">
+        <div class="ai-live-title">Live Project: Asset Manager Web App</div>
+        <div class="ai-live-desc">
+          Full-stack asset management tool built entirely with Claude + Replit no developer involved.
+          Demonstrates AI fluency from prompt to deployed product.
+        </div>
+      </div>
+      <a href="/app" target="_blank" class="btn-live">View Live App</a>
+    </div>
+  </div>
+</section>
+
+<!-- GTM & SALES INTELLIGENCE -->
+<section class="section" id="gtm">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-eyebrow">Oracle Requirement GTM Presentations & Sales Decks</div>
+      <h2 class="section-title">GTM & Sales Intelligence</h2>
+      <p class="section-sub">
+        Customer-ready presentations and interactive dashboards converting multi-source research into
+        structured, visually compelling sales tools.
+      </p>
+    </div>
+    <div class="work-grid">
+
+      <!-- ICP PRESENTATION -->
+      <div class="work-card">
+        <div class="work-card-preview" style="background:#F8F9FB; padding:0; height:200px; overflow:hidden; position:relative;">
+          <!-- Header -->
+          <div style="background:#1B3A6B; padding:10px 14px;">
+            <div style="color:#fff; font-size:11px; font-weight:700;">EOS-Frustrated Companies Campaign Targeting</div>
+            <div style="color:#AAD4F5; font-size:9px; margin-top:2px;">ICP + Buyer Persona + Apollo &amp; Sales Navigator Filters &nbsp;|&nbsp; April 2026</div>
+          </div>
+          <!-- Tabs -->
+          <div style="display:flex; gap:6px; padding:8px 14px; background:#fff; border-bottom:1px solid #E2E8F0;">
+            <span style="background:#1B3A6B; color:#fff; font-size:9px; font-weight:600; padding:4px 10px; border-radius:6px;">ICP</span>
+            <span style="background:#fff; color:#555; font-size:9px; padding:4px 10px; border-radius:6px; border:1px solid #D0D7E4;">Buyer Persona</span>
+            <span style="background:#fff; color:#555; font-size:9px; padding:4px 10px; border-radius:6px; border:1px solid #D0D7E4;">Apollo.io Filters</span>
+            <span style="background:#fff; color:#555; font-size:9px; padding:4px 10px; border-radius:6px; border:1px solid #D0D7E4;">Sales Navigator</span>
+          </div>
+          <!-- KPI Grid -->
+          <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:6px; padding:8px 14px;">
+            <div style="background:#fff; border:1px solid #E2E8F0; border-radius:6px; padding:8px;">
+              <div style="font-size:8px; color:#777; text-transform:uppercase; letter-spacing:.04em;">Company Size</div>
+              <div style="font-size:14px; font-weight:700; color:#1B3A6B; margin-top:2px;">10–500</div>
+              <div style="font-size:8px; color:#999;">sweet spot 30–200</div>
+            </div>
+            <div style="background:#fff; border:1px solid #E2E8F0; border-radius:6px; padding:8px;">
+              <div style="font-size:8px; color:#777; text-transform:uppercase; letter-spacing:.04em;">Revenue</div>
+              <div style="font-size:14px; font-weight:700; color:#1B3A6B; margin-top:2px;">$3M–$75M</div>
+              <div style="font-size:8px; color:#999;">ARR / annual</div>
+            </div>
+            <div style="background:#fff; border:1px solid #E2E8F0; border-radius:6px; padding:8px;">
+              <div style="font-size:8px; color:#777; text-transform:uppercase; letter-spacing:.04em;">EOS Tenure</div>
+              <div style="font-size:14px; font-weight:700; color:#1B3A6B; margin-top:2px;">2–7 yrs</div>
+              <div style="font-size:8px; color:#999;">honeymoon is over</div>
+            </div>
+            <div style="background:#fff; border:1px solid #E2E8F0; border-radius:6px; padding:8px;">
+              <div style="font-size:8px; color:#777; text-transform:uppercase; letter-spacing:.04em;">Geography</div>
+              <div style="font-size:14px; font-weight:700; color:#1B3A6B; margin-top:2px;">USA</div>
+              <div style="font-size:8px; color:#999;">TX FL OH MI CO</div>
+            </div>
+          </div>
+          <div class="preview-label">Interactive HTML</div>
+          <a href="icp_presentation.html" target="_blank" class="preview-overlay-link">Open Full View ↗</a>
+        </div>
+        <div class="work-card-body">
+          <div class="work-card-category">GTM Targeting Dashboard</div>
+          <div class="work-card-title">ICP, Buyer Persona & Sales Filters</div>
+          <div class="work-card-desc">
+            Tabbed sales intelligence dashboard for an executive coaching firm -
+            ICP definition, buyer persona development, Apollo.io and Sales Navigator filter sets
+            with boolean search strings. Built as a live HTML deliverable for the sales team.
+          </div>
+          <div class="ai-note">
+            <strong>AI workflow:</strong> Claude used to synthesize client discovery notes into structured ICP logic,
+            identify EOS frustration signals, build persona language from market research,
+            and generate the full coded dashboard in one session. ~3 hrs vs. 2 days manual.
+          </div>
+        </div>
+        <div class="work-card-footer">
+          <div class="tool-tags">
+            <span class="tool-tag">Claude</span>
+            <span class="tool-tag">HTML/CSS</span>
+            <span class="tool-tag">Apollo.io</span>
+          </div>
+          <a href="icp_presentation.html" target="_blank" class="btn-view">Open</a>
+        </div>
+      </div>
+
+      <!-- LEAD DASHBOARD -->
+      <div class="work-card">
+        <div class="work-card-preview" style="background:#0F1F3A; padding:16px; display:flex; flex-direction:column; justify-content:space-between; height:200px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+            <span style="color:#AAD4F5; font-size:11px; font-weight:700; letter-spacing:.06em; text-transform:uppercase;">Lead Dashboard</span>
+            <span style="background:rgba(34,197,94,.15); color:#4ADE80; font-size:10px; padding:3px 9px; border-radius:4px;">Live</span>
+          </div>
+          <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:6px; flex:1;">
+            <div style="background:rgba(255,255,255,.07); border-radius:6px; padding:8px; text-align:center;">
+              <div style="color:#fff; font-size:18px; font-weight:700;">48</div>
+              <div style="color:rgba(255,255,255,.4); font-size:9px; margin-top:2px;">Total Leads</div>
+            </div>
+            <div style="background:rgba(255,255,255,.07); border-radius:6px; padding:8px; text-align:center;">
+              <div style="color:#4ADE80; font-size:18px; font-weight:700;">12</div>
+              <div style="color:rgba(255,255,255,.4); font-size:9px; margin-top:2px;">Hot</div>
+            </div>
+            <div style="background:rgba(255,255,255,.07); border-radius:6px; padding:8px; text-align:center;">
+              <div style="color:#FBBF24; font-size:18px; font-weight:700;">23</div>
+              <div style="color:rgba(255,255,255,.4); font-size:9px; margin-top:2px;">Warm</div>
+            </div>
+          </div>
+          <div style="background:rgba(255,255,255,.05); border-radius:5px; padding:7px 10px; margin-top:8px;">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <span style="color:rgba(255,255,255,.5); font-size:9px;">Pipeline Progress</span>
+              <span style="color:#AAD4F5; font-size:9px; font-weight:600;">68%</span>
+            </div>
+            <div style="background:rgba(255,255,255,.1); border-radius:3px; height:4px; margin-top:5px;">
+              <div style="background:#2E75B6; width:68%; height:100%; border-radius:3px;"></div>
+            </div>
+          </div>
+          <div class="preview-label">Interactive Dashboard</div>
+          <a href="lead_dashboard.html" target="_blank" class="preview-overlay-link">Open Full View ↗</a>
+        </div>
+        <div class="work-card-body">
+          <div class="work-card-category">Sales Intelligence Dashboard</div>
+          <div class="work-card-title">TLO Lead Prioritization Dashboard</div>
+          <div class="work-card-desc">
+            Interactive lead tracking and prioritization dashboard pipeline view, lead scoring,
+            engagement signals, and outreach status. Designed for a B2B sales team
+            operating in the SMB executive coaching market.
+          </div>
+          <div class="ai-note">
+            <strong>AI workflow:</strong> Claude generated the full dashboard HTML from a plain-text brief
+            describing the sales team's workflow. No design file needed brief in, working tool out.
+          </div>
+        </div>
+        <div class="work-card-footer">
+          <div class="tool-tags">
+            <span class="tool-tag">Claude</span>
+            <span class="tool-tag">HTML/CSS/JS</span>
+            <span class="tool-tag">Data Viz</span>
+          </div>
+          <a href="lead_dashboard.html" target="_blank" class="btn-view">Open</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- VIDEO PRODUCTION -->
+<section class="section" id="video" style="background: #F4F6FA;">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-eyebrow">Oracle Requirement Demo Video Editing & Post-Production</div>
+      <h2 class="section-title">Video Production</h2>
+      <p class="section-sub">
+        Short-form product demos, brand content, and event intros produced with
+        AI-assisted scripting, captions, and overlay text.
+      </p>
+    </div>
+
+    <div class="video-grid">
+
+      <!-- VIDEO 1: Cafeteria -->
+      <div class="video-card">
+        <a href="https://drive.google.com/file/d/1wHpAbqdG4rct5iGVWSrTMEMctdnG4KGa/view?usp=drive_link" target="_blank" style="display:block; text-decoration:none;">
+        <div class="video-thumb">
+          <video muted preload="metadata" src="video-cafeteria.mp4"></video>
+          <div class="video-play-btn"><div class="video-play-icon"></div></div>
+        </div></a>
+        <div class="video-info">
+          <div class="video-cat">Brand Content</div>
+          <div class="video-title">Cafeteria Brand Video</div>
+          <div class="video-ai">
+            <strong>Tools:</strong> Nano Banana for visual assets, Google VEO 3.1 for AI video generation.
+          </div>
+        </div>
+      </div>
+
+      <!-- VIDEO 2: Producto -->
+      <div class="video-card">
+        <a href="https://drive.google.com/file/d/1qc-UwfhBasYq_mkeXTrlBmthNfPXFiv7/view?usp=drive_link" target="_blank" style="display:block; text-decoration:none;">
+        <div class="video-thumb">
+          <video muted preload="metadata" src="video-product.mp4"></video>
+          <div class="video-play-btn"><div class="video-play-icon"></div></div>
+        </div></a>
+        <div class="video-info">
+          <div class="video-cat">Product Demo</div>
+          <div class="video-title">Product Showcase Short Form</div>
+          <div class="video-ai">
+            <strong>Tools:</strong> AI-assisted storyboard and overlay copy. Grok for creative ideation.
+          </div>
+        </div>
+      </div>
+
+      <!-- VIDEO 3: Podcast Intro -->
+      <div class="video-card">
+        <a href="https://drive.google.com/file/d/1waJbL_RLd9KLskzqZaGoEh2EqYoucMpQ/view?usp=drive_link" target="_blank" style="display:block; text-decoration:none;">
+        <div class="video-thumb">
+          <video muted preload="metadata" src="video-podcast.mp4"></video>
+          <div class="video-play-btn"><div class="video-play-icon"></div></div>
+        </div></a>
+        <div class="video-info">
+          <div class="video-cat">Podcast Production</div>
+          <div class="video-title">Podcast Intro Branded Animation</div>
+          <div class="video-ai">
+            <strong>Tools:</strong> Sora for AI video generation, ChatGPT for prompt polish and script.
+          </div>
+        </div>
+      </div>
+
+      <!-- VIDEO 4: Llantera -->
+      <div class="video-card">
+        <a href="https://drive.google.com/file/d/17xscxwK0tbXb66UTl7roXGbE3vdiYeM2/view?usp=drive_link" target="_blank" style="display:block; text-decoration:none;">
+        <div class="video-thumb">
+          <video muted preload="metadata" src="video-tire.mp4"></video>
+          <div class="video-play-btn"><div class="video-play-icon"></div></div>
+        </div></a>
+        <div class="video-info">
+          <div class="video-cat">Local Business</div>
+          <div class="video-title">Tire Shop Product Video</div>
+          <div class="video-ai">
+            <strong>Tools:</strong> Google VEO 3.1 for video generation, Nano Banana for assets and storyboard.
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <p style="margin-top:20px; font-size:12px; color:var(--muted); text-align:center;">
+      Hover to preview. All videos produced with AI-assisted scripting and overlay copy.
+    </p>
+  </div>
+</section>
+
+<!-- COLLATERAL & PRESENTATIONS -->
+<section class="section" id="collateral">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-eyebrow">Oracle Requirement Collateral, Event Decks & Research</div>
+      <h2 class="section-title">Decks, Collateral & Research</h2>
+      <p class="section-sub">
+        Enterprise research, sponsor pitch decks, and PDF collateral combining
+        AI research synthesis with structured visual storytelling.
+      </p>
+    </div>
+
+    <div class="collateral-grid">
+
+      <!-- VET BLUEPRINT -->
+      <div class="collateral-card">
+        <div class="collateral-icon" style="background:#EFF6FF;">📊</div>
+        <div class="collateral-cat">Enterprise Research · Slide Deck</div>
+        <div class="collateral-title">Veterinary Practice Blueprint 2026</div>
+        <div class="collateral-desc">
+          Market research and enterprise go-to-market strategy for UK veterinary practice groups -
+          competitive landscape, ICP segmentation, and growth levers for enterprise sales motion.
+        </div>
+        <div class="collateral-ai">
+          <strong>AI workflow:</strong> Claude used for competitive research synthesis, market sizing, and
+          slide narrative structure. Full research-to-deck in under 4 hours.
+        </div>
+        <a href="https://drive.google.com/file/d/1wB27QuA2c6tGBrYCCM5NhsBv5BDH0aXa/view?usp=drive_link" target="_blank" class="collateral-link">View PDF</a>
+      </div>
+
+      <!-- POOL SESSIONS -->
+      <div class="collateral-card">
+        <div class="collateral-icon" style="background:#FFF7ED;">🎤</div>
+        <div class="collateral-cat">Sponsor Pitch · Presentation Deck</div>
+        <div class="collateral-title">Pool Sessions Sponsorship Deck</div>
+        <div class="collateral-desc">
+          Sponsorship pitch presentation for an events property audience overview,
+          brand activation opportunities, and tiered sponsorship packages.
+          High-stakes, external-facing deliverable.
+        </div>
+        <div class="collateral-ai">
+          <strong>AI workflow:</strong> ChatGPT for value proposition framing and sponsor benefits copy.
+          Claude for deck structure and audience data synthesis. Designed in Canva.
+        </div>
+        <a href="https://drive.google.com/file/d/1Q6FlyxlcxnbqVJmp23HekJ0BcGVzRp5Q/view?usp=drive_link" target="_blank" class="collateral-link">View PDF</a>
+      </div>
+
+      <!-- LANDING PAGE -->
+      <div class="collateral-card">
+        <div class="collateral-icon" style="background:#F0FDF4;">🚀</div>
+        <div class="collateral-cat">AI-Built Web · Landing Page</div>
+        <div class="collateral-title">Landing Page</div>
+        <div class="collateral-desc">
+          High-conversion landing pages for startups built end-to-end with AI. From brand brief to
+          live, production-ready site in hours. No design agency. No dev team. Just the right prompts
+          and the right stack.
+        </div>
+        <div class="collateral-ai">
+          <strong>AI workflow:</strong> Claude for copy strategy, structure, and full code generation. Replit for deployment. Canva AI for visual assets. Brief in, live site out.
+        </div>
+        <a href="/app" target="_blank" class="collateral-link">View Live Example</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<footer class="footer" id="contact">
+  <h2>Let's work together.</h2>
+  <p>Content Production Specialist · AI &amp; Analytics Product Marketing · Oracle</p>
+<div class="footer-bottom">
+    Edgar Mauricio Martin Peña · Portfolio 2026 · Built with AI (Claude + Replit)
+  </div>
+</footer>
+
+</body>
+</html>
