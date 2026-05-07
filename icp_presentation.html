@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ICP + Buyer Persona + Targeting Filters</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;background:#F8F9FB;color:#1a1a1a;padding:24px}
+.header{background:#1B3A6B;color:#fff;border-radius:10px;padding:20px 28px;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between}
+.header-title{font-size:20px;font-weight:600}
+.header-sub{font-size:13px;color:#AAD4F5;margin-top:4px}
+.header-badge{background:rgba(255,255,255,.15);border-radius:6px;padding:6px 14px;font-size:12px;color:#fff}
+.tabs{display:flex;gap:6px;margin-bottom:20px;flex-wrap:wrap}
+.tab{padding:9px 20px;border-radius:8px;font-size:13px;font-weight:500;cursor:pointer;border:1px solid #D0D7E4;background:#fff;color:#555;transition:all .15s}
+.tab:hover{background:#EEF2F8;border-color:#1B3A6B;color:#1B3A6B}
+.tab.active{background:#1B3A6B;color:#fff;border-color:#1B3A6B}
+.section{display:none}.section.active{display:block}
+.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px}
+.kpi{background:#fff;border:1px solid #E2E8F0;border-radius:8px;padding:16px 18px}
+.kpi-label{font-size:12px;color:#777;margin-bottom:6px;text-transform:uppercase;letter-spacing:.04em}
+.kpi-val{font-size:22px;font-weight:600;color:#1B3A6B}
+.kpi-sub{font-size:11px;color:#999;margin-top:4px}
+.card{background:#fff;border:1px solid #E2E8F0;border-radius:10px;padding:18px 22px;margin-bottom:16px}
+.card-title{font-size:11px;font-weight:600;color:#1B3A6B;margin-bottom:12px;text-transform:uppercase;letter-spacing:.06em}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{background:#1B3A6B;color:#fff;font-weight:600;padding:10px 14px;text-align:left;font-size:12px}
+th:first-child{border-radius:4px 0 0 4px}
+th:last-child{border-radius:0 4px 4px 0}
+td{padding:9px 14px;border-bottom:1px solid #F0F4F8;vertical-align:top}
+tr:last-child td{border-bottom:none}
+tr:nth-child(even) td{background:#FAFBFC}
+.tag{display:inline-block;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;margin:2px}
+.tag-navy{background:#E6EEF8;color:#1B3A6B}
+.pain-card{border-left:4px solid #1B3A6B;border-radius:0 10px 10px 0;background:#F7F9FC;padding:16px 18px;margin-bottom:14px}
+.pain-num{font-size:11px;color:#2E75B6;font-weight:600;margin-bottom:5px;text-transform:uppercase;letter-spacing:.05em}
+.pain-title{font-size:15px;font-weight:600;color:#1a1a1a;margin-bottom:8px}
+.pain-ceo{font-size:12px;color:#888;font-style:italic;margin-bottom:6px}
+.pain-tlo{font-size:12px;color:#1B3A6B;border-top:1px solid #E2E8F0;padding-top:8px;margin-top:8px;line-height:1.6}
+.quote-pill{display:inline-block;background:#fff;border:1px solid #D0D7E4;border-radius:6px;padding:5px 11px;font-size:12px;color:#555;margin:3px 3px 3px 0;font-style:italic}
+.signal-row{display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid #F0F4F8;font-size:13px;line-height:1.5}
+.signal-row:last-child{border-bottom:none}
+.signal-dot{width:8px;height:8px;border-radius:50%;background:#C55A11;flex-shrink:0;margin-top:5px}
+.persona-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:18px}
+.persona-attr{background:#F7F9FC;border-radius:8px;padding:13px 16px}
+.attr-label{font-size:11px;color:#999;margin-bottom:5px;text-transform:uppercase;letter-spacing:.05em}
+.attr-val{font-size:13px;color:#1a1a1a;line-height:1.5}
+.filter-badge{display:inline-block;background:#E6EEF8;color:#1B3A6B;border-radius:4px;padding:3px 8px;font-size:11px;font-weight:600;margin:2px}
+.bool-box{background:#F7F9FC;border-radius:8px;padding:14px 16px;font-family:'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace;font-size:12px;color:#555;line-height:1.7;word-break:break-word;border:1px solid #E2E8F0}
+.persona-hero{display:flex;align-items:center;gap:16px;margin-bottom:20px;padding:18px;background:#F0F5FB;border-radius:12px;border:1px solid #D0DCE8}
+.persona-avatar{width:58px;height:58px;border-radius:50%;background:#1B3A6B;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:700;color:#fff;flex-shrink:0}
+.insight-box{background:#FFF8E6;border-radius:8px;padding:15px 18px;font-size:13px;border-left:4px solid #C55A11;line-height:1.6}
+.warm-tactic{background:#E6EEF8;border-radius:8px;padding:15px 18px;font-size:13px;border-left:4px solid #1B3A6B;line-height:1.6;margin-top:4px}
+</style>
+</head>
+<body>
+<div class="header">
+  <div>
+    <div class="header-title">EOS-Frustrated Companies — Campaign Targeting</div>
+    <div class="header-sub">ICP + Buyer Persona + Apollo &amp; Sales Navigator Filters &nbsp;|&nbsp; April 2026</div>
+  </div>
+  <div class="header-badge">EOS-Frustrated Companies Campaign</div>
+</div>
+
+<div class="tabs">
+  <div class="tab active" onclick="show('icp',this)">ICP</div>
+  <div class="tab" onclick="show('persona',this)">Buyer Persona</div>
+  <div class="tab" onclick="show('apollo',this)">Apollo.io Filters</div>
+  <div class="tab" onclick="show('salesnav',this)">Sales Navigator Filters</div>
+</div>
+
+<!-- ICP -->
+<div id="icp" class="section active">
+  <div class="kpi-grid">
+    <div class="kpi"><div class="kpi-label">Company size</div><div class="kpi-val">10–500</div><div class="kpi-sub">sweet spot: 30–200 employees</div></div>
+    <div class="kpi"><div class="kpi-label">Revenue range</div><div class="kpi-val">$3M–$75M</div><div class="kpi-sub">ARR / annual revenue</div></div>
+    <div class="kpi"><div class="kpi-label">EOS tenure</div><div class="kpi-val">2–7 yrs</div><div class="kpi-sub">honeymoon is over</div></div>
+    <div class="kpi"><div class="kpi-label">Geography</div><div class="kpi-val">USA</div><div class="kpi-sub">TX FL OH MI CO GA IL NC AZ TN</div></div>
+  </div>
+
+  <div class="insight-box" style="margin-bottom:18px">
+    <strong style="color:#C55A11">Core insight: </strong>EOS treats companies like machines. Machines run but they don't grow, adapt, or inspire. The gap — addressing Activity + Relationship + Context, not just Activity.
+  </div>
+
+  <div class="card">
+    <div class="card-title">Top industries by EOS adoption</div>
+    <table>
+      <tr><th>Industry</th><th>Why EOS-heavy</th><th>Fit signal</th></tr>
+      <tr><td><strong>Professional Services</strong></td><td>Law, accounting, consulting, staffing — early EOS adopters</td><td>Turnover, partner dynamics, culture drag</td></tr>
+      <tr><td><strong>Technology / SaaS</strong></td><td>Founder-led tech companies scale with EOS</td><td>Rapid growth exposes culture gaps fast</td></tr>
+      <tr><td><strong>Construction / Trades</strong></td><td>One of the largest EOS industry segments</td><td>Ops-heavy culture, leadership development gaps</td></tr>
+      <tr><td><strong>Manufacturing</strong></td><td>Process-oriented companies, early EOS adopters</td><td>Compliance culture without engagement is common</td></tr>
+      <tr><td><strong>Marketing / Agencies</strong></td><td>Very high EOS adoption in the agency world</td><td>Creatives resist pure process systems</td></tr>
+      <tr><td><strong>Healthcare (Private Practice)</strong></td><td>Multi-location clinics, dental, veterinary groups</td><td>Burnout and culture issues endemic</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Frustration signals — what to look for</div>
+    <div class="signal-row"><div class="signal-dot"></div><div>CEO posts or speaks about feeling stuck <em>despite</em> having great structure</div></div>
+    <div class="signal-row"><div class="signal-dot"></div><div>Job postings adding culture-building, engagement, or leadership development on top of EOS language</div></div>
+    <div class="signal-row"><div class="signal-dot"></div><div>Glassdoor reviews mentioning "process-heavy," "L10 meetings don't change anything," micro-management despite EOS</div></div>
+    <div class="signal-row"><div class="signal-dot"></div><div>LinkedIn language: "compliance not commitment," "burned out," "going through the motions," "the edge is gone"</div></div>
+    <div class="signal-row"><div class="signal-dot"></div><div>Recent Integrator seat turnover or leadership change</div></div>
+    <div class="signal-row"><div class="signal-dot"></div><div>CEO podcast/interview where EOS is described as "a starting point" or "we need more than EOS"</div></div>
+    <div class="signal-row"><div class="signal-dot"></div><div>Companies actively searching for executive coach or organizational culture consultant</div></div>
+  </div>
+</div>
+
+<!-- BUYER PERSONA -->
+<div id="persona" class="section">
+  <div class="persona-hero">
+    <div class="persona-avatar">FV</div>
+    <div>
+      <div style="font-size:18px;font-weight:700;margin-bottom:4px">The Frustrated Visionary</div>
+      <div style="font-size:13px;color:#555">CEO / Founder / President — running EOS 2–7 years — built the machine, machine is running, something essential is still missing</div>
+    </div>
+  </div>
+
+  <div class="persona-grid">
+    <div class="persona-attr"><div class="attr-label">Title</div><div class="attr-val">CEO, Founder, Co-Founder, President, Owner, Managing Partner</div></div>
+    <div class="persona-attr"><div class="attr-label">Age range</div><div class="attr-val">38–58. Second or third-time founder, or long-tenured CEO who has grown with the company</div></div>
+    <div class="persona-attr"><div class="attr-label">EOS role</div><div class="attr-val">The Visionary in V/I structure — or hands-on CEO struggling to fully delegate even with an Integrator</div></div>
+    <div class="persona-attr"><div class="attr-label">EOS experience</div><div class="attr-val">2–7 years. Runs L10s, uses People Analyzer, has a functioning Rocks cadence</div></div>
+    <div class="persona-attr"><div class="attr-label">Coaching openness</div><div class="attr-val">Has worked with EOS Implementer. Open to frameworks that enhance EOS, not replace it</div></div>
+    <div class="persona-attr"><div class="attr-label">Where they hang out</div><div class="attr-val">LinkedIn (active poster), EO / YPO / Vistage, leadership podcasts, Lencioni / Collins / Sinek books</div></div>
+  </div>
+
+  <div style="font-size:15px;font-weight:600;color:#1B3A6B;margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid #E2E8F0">The three core pains — Key hooks</div>
+
+  <div class="pain-card">
+    <div class="pain-num">Pain #1</div>
+    <div class="pain-title">"The same problems keep coming back no matter what we do about them"</div>
+    <div class="pain-ceo">CEO language in the wild:</div>
+    <div>
+      <span class="quote-pill">"We IDS it and it comes back"</span>
+      <span class="quote-pill">"Something deeper keeps creating the same patterns"</span>
+      <span class="quote-pill">"Nobody says the real issue in the room"</span>
+      <span class="quote-pill">"Problems only surface when they're already expensive"</span>
+    </div>
+    <div class="pain-tlo"><strong>Answer:</strong> Issues recur because their root is in the Context field — the beliefs and stories the org lives inside. Shifting Context is permanent. IDS operates at Activity level; this methodology reaches deeper.</div>
+  </div>
+
+  <div class="pain-card">
+    <div class="pain-num">Pain #2</div>
+    <div class="pain-title">"The system is running but the people inside it aren't fully in it"</div>
+    <div class="pain-ceo">CEO language in the wild:</div>
+    <div>
+      <span class="quote-pill">"Organized but not energized"</span>
+      <span class="quote-pill">"Compliance, not commitment"</span>
+      <span class="quote-pill">"Going through the motions"</span>
+      <span class="quote-pill">"The edge has gone"</span>
+    </div>
+    <div class="pain-tlo"><strong>Answer:</strong> EOS manages Activity. It does not address the Relationship field or the Context field. When leaders work with all three fields, energy returns — structure stays and comes alive.</div>
+  </div>
+
+  <div class="pain-card">
+    <div class="pain-num">Pain #3</div>
+    <div class="pain-title">"I built the structure to get out of the middle — I'm still in the middle"</div>
+    <div class="pain-ceo">CEO language in the wild:</div>
+    <div>
+      <span class="quote-pill">"Nothing moves without my sign-off"</span>
+      <span class="quote-pill">"Accountability Chart is clear but decisions still come back to me"</span>
+      <span class="quote-pill">"I'm still the answer to everything"</span>
+      <span class="quote-pill">"I want a team that owns — not one that waits for me"</span>
+    </div>
+    <div class="pain-tlo"><strong>Answer:</strong> EOS defines structure but does not build the developmental capacity of people to own it. The leader's role shifts from manager to gardener — cultivating conditions for real ownership.</div>
+  </div>
+
+  <div class="card" style="margin-top:4px">
+    <div class="card-title">What this persona wants in a solution</div>
+    <div class="signal-row"><div class="signal-dot"></div><div>Practical results — clear connection between the work and business outcomes</div></div>
+    <div class="signal-row"><div class="signal-dot"></div><div>Works alongside EOS — does not require abandoning their system</div></div>
+    <div class="signal-row"><div class="signal-dot"></div><div>Peer validation — stories from CEOs who felt the exact same frustrations</div></div>
+    <div class="signal-row"><div class="signal-dot"></div><div>Speed to clarity — problem named fast and specifically, no 90-day diagnosis cycles</div></div>
+    <div class="signal-row"><div class="signal-dot"></div><div>Founder credibility as a practitioner CEO — stories, not testimonials</div></div>
+  </div>
+</div>
+
+<!-- APOLLO -->
+<div id="apollo" class="section">
+  <div class="card">
+    <div class="card-title">Apollo.io — people &amp; company filters</div>
+    <table>
+      <tr><th style="width:26%">Filter</th><th>Value</th></tr>
+      <tr><td><strong>Job titles</strong></td><td>CEO · Chief Executive Officer · President · Founder · Co-Founder · Owner · Managing Director · Managing Partner</td></tr>
+      <tr><td><strong>Seniority</strong></td><td>C-Suite · Founder · Owner</td></tr>
+      <tr><td><strong>Headcount</strong></td><td>11–200 employees (primary) &nbsp;·&nbsp; 201–500 (secondary)</td></tr>
+      <tr><td><strong>Revenue</strong></td><td>$3M – $75M</td></tr>
+      <tr><td><strong>Geography</strong></td><td>United States — priority states: TX, FL, OH, MI, CO, GA, IL, NC, AZ, TN</td></tr>
+      <tr><td><strong>Industries</strong></td><td>Business Services · IT Services & Consulting · Construction · Manufacturing · Marketing & Advertising · Healthcare Services · Professional Services · Distribution · Staffing & Recruiting</td></tr>
+      <tr><td><strong>Intent topics</strong></td><td>Executive coaching · Organizational culture · Employee engagement · Leadership development</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Apollo.io — boolean search string</div>
+    <div class="bool-box">(EOS OR "Traction" OR "Entrepreneurial Operating System" OR "Level 10" OR "L10 meeting" OR Integrator OR "Accountability Chart" OR "Gino Wickman") AND (CEO OR Founder OR President OR Owner)</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Qualification logic — prioritize contacts matching 3 or more</div>
+    <div class="signal-row"><div class="signal-dot"></div><div>Company website or LinkedIn mentions EOS / Traction / GWC in the About section</div></div>
+    <div class="signal-row"><div class="signal-dot"></div><div>Company has an open role for "Culture," "People," "Engagement," or "Leadership Development"</div></div>
+    <div class="signal-row"><div class="signal-dot"></div><div>CEO has 3+ years in current role (past the EOS honeymoon phase)</div></div>
+    <div class="signal-row"><div class="signal-dot"></div><div>Industry is in the high-EOS-adoption list (Professional Services, Tech, Construction, Manufacturing, Agency, Healthcare)</div></div>
+    <div class="signal-row"><div class="signal-dot"></div><div>Company is in a priority state (TX, FL, OH, MI, CO, GA, IL, NC, AZ, TN)</div></div>
+    <div class="signal-row"><div class="signal-dot"></div><div>Revenue $3M–$75M — enough to invest in executive coaching, not so large this becomes a corporate initiative</div></div>
+  </div>
+</div>
+
+<!-- SALES NAV -->
+<div id="salesnav" class="section">
+  <div class="card">
+    <div class="card-title">LinkedIn Sales Navigator — lead filters</div>
+    <table>
+      <tr><th style="width:26%">Filter</th><th>Value</th></tr>
+      <tr><td><strong>Job title</strong></td><td>CEO · President · Founder · Co-Founder · Owner — current role only</td></tr>
+      <tr><td><strong>Seniority</strong></td><td>CXO · Owner · Founder</td></tr>
+      <tr><td><strong>Headcount</strong></td><td>11–200 (primary) &nbsp;·&nbsp; 201–500 (secondary)</td></tr>
+      <tr><td><strong>Geography</strong></td><td>United States — priority: TX FL OH MI CO GA IL NC AZ TN</td></tr>
+      <tr><td><strong>Industry</strong></td><td>Business Services · Computer Software · Construction · Marketing & Advertising · Management Consulting · Medical Practice · Manufacturing · Staffing & Recruiting</td></tr>
+      <tr><td><strong>Years in current role</strong></td><td>3+ years — filters for CEOs past the EOS honeymoon, where cracks are showing</td></tr>
+      <tr><td><strong>Person keywords</strong> (About section)</td><td>
+        <span class="filter-badge">EOS</span>
+        <span class="filter-badge">culture</span>
+        <span class="filter-badge">leadership development</span>
+        <span class="filter-badge">next level</span>
+        <span class="filter-badge">beyond EOS</span>
+        <span class="filter-badge">stuck</span>
+        <span class="filter-badge">Traction</span>
+      </td></tr>
+      <tr><td><strong>Network</strong></td><td>2nd-degree connections via EOS Implementers, Vistage chairs, YPO/EO members</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-title">LinkedIn Sales Navigator — account filters</div>
+    <table>
+      <tr><th style="width:26%">Filter</th><th>Value</th></tr>
+      <tr><td><strong>Headcount growth</strong></td><td>0–10% growth (stagnation signal) OR negative growth (active pain signal)</td></tr>
+      <tr><td><strong>Senior leadership changes</strong></td><td>Active — flag companies with recent C-suite or VP-level changes (especially Integrator seat turnover)</td></tr>
+      <tr><td><strong>Dept headcount (HR/People)</strong></td><td>1–5 — lean people team means CEO is driving culture without dedicated culture leader</td></tr>
+      <tr><td><strong>Technologies used</strong></td><td>HubSpot · Salesforce · Slack · Monday.com · Asana (modern ops stack = EOS-compatible companies)</td></tr>
+      <tr><td><strong>Keywords in description</strong></td><td>
+        <span class="filter-badge">EOS</span>
+        <span class="filter-badge">Traction</span>
+        <span class="filter-badge">core values</span>
+        <span class="filter-badge">Rocks</span>
+        <span class="filter-badge">Accountability Chart</span>
+        <span class="filter-badge">GWC</span>
+      </td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Sales Navigator boolean search string</div>
+    <div class="bool-box">(EOS OR Traction OR "Entrepreneurial Operating System" OR "Level 10" OR "Gino Wickman" OR Integrator OR Visionary OR "Accountability Chart" OR GWC) AND (CEO OR Founder OR President OR Owner)</div>
+  </div>
+
+  <div class="warm-tactic">
+    <strong style="color:#1B3A6B">Warm network tactic: </strong>Search for 2nd-degree connections who are connected to known EOS Implementers (search "EOS Implementer" as a job title, pull their connections). These are the warmest possible intros — the Implementer relationship means the CEO is actively invested in EOS and is the exact profile most likely to have hit the ceiling this methodology addresses.
+  </div>
+</div>
+
+<script>
+function show(id,el){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  el.classList.add('active');
+}
+</script>
+</body>
+</html>
